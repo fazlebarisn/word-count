@@ -36,7 +36,25 @@ class WordCountAndTimePlugin{
     // Our extra content
     function createHTML( $content ){
 
-        $html = '<h3>' . get_option('wcp_headline' , 'Post Statistice') . '</h3><p>';
+        $html = '<h3>' . esc_html(get_option('wcp_headline' , 'Post Statistice')) . '</h3><p>';
+
+        if( get_option('wcp_wordcount' , '1') OR get_option('wcp_readtime' , '1') ){
+            $wordCount = str_word_count( strip_tags( $content ) );
+        }
+
+        if( get_option('wcp_wordcount' , '1') ){
+            $html.= 'This post has ' . $wordCount . ' words.<br>';
+        }
+
+        if( get_option('wcp_charactorcount' , '1') ){
+            $html.= 'This post has ' . strlen( strip_tags( $content ) ) . ' Characters.<br>';
+        }
+
+        if( get_option('wcp_readtime' , '1') ){
+            $html.= 'This post will take ' . round( $wordCount/225 ) . ' min to read.';
+        }
+
+        $html.= '</p>';
 
         if( get_option('wcp_location' , '0') == '0' ){
             return $html . $content;
