@@ -29,11 +29,20 @@ class WordCountAndTimePlugin{
             return $this->createHTML($content);
         }
 
+        // return default content
         return $content;
     }
 
+    // Our extra content
     function createHTML( $content ){
-        return $content . 'Hello';
+
+        $html = '<h3>' . get_option('wcp_headline' , 'Post Statistice') . '</h3><p>';
+
+        if( get_option('wcp_location' , '0') == '0' ){
+            return $html . $content;
+        }
+
+        return $content . $html;
     }
 
     function settings(){
@@ -55,23 +64,26 @@ class WordCountAndTimePlugin{
         add_settings_field('wcp_charactorcount' , 'Character Count' , array($this , 'checkboxtHTML') , 'word-count-settings-page' , 'wcp_first_section' , array('theName' => 'wcp_charactorcount') );
         register_setting('wordcountplugin' , 'wcp_charactorcount' , array('sanitize_callback' => 'sanitize_text_field' , 'default' => '0') );
 
-        // For Character Count
+        // For Read Time Count
         add_settings_field('wcp_readtime' , 'Read Time' , array($this , 'checkboxtHTML') , 'word-count-settings-page' , 'wcp_first_section' , array('theName' => 'wcp_readtime') );
         register_setting('wordcountplugin' , 'wcp_readtime' , array('sanitize_callback' => 'sanitize_text_field' , 'default' => '1') );
     }
 
+    // All checkbox data will generate from here
     function checkboxtHTML( $argc ){
         ?>
             <input type="checkbox" name="<?php echo $argc['theName'] ?>" value="1" <?php checked(get_option( $argc['theName'] ) , '1') ?> >
         <?php
     }
 
-
+    // All text field data will generate from here
     function headlineHTML(){
         ?>
             <input type="text" name="wcp_headline" value="<?php echo esc_attr( get_option('wcp_headline') ) ?>">
         <?php
     }
+
+    // All selectbox data will generate from here
     function locationHTML(){
         ?>
             <select name="wcp_location">
