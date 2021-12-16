@@ -1,0 +1,19 @@
+{
+    "name": "sony/word-count",
+    "description": "A plugin for word count",
+    "type": "project",
+    "license": "GPL",
+    "autoload": {
+        "psr-4": {
+            "Inc\\": "inc/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fazle Bari",
+            "email": "fazlebarisn@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

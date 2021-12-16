@@ -7,9 +7,15 @@
     Author URI: https://chitabd.com
 */
 
+if( file_exists( dirname(__FILE__) . '/vendor/autoload.php') ){
+    require_once dirname(__FILE__) . '/vendor/autoload.php';
+}
+
+use Inc\Activate;
+use Inc\Deactivate;
 class WordCountAndTimePlugin{
 
-    function __construct()
+    function register()
     {
         add_action( 'admin_menu' , array( $this , 'adminPage') );
         add_action( 'admin_init' , array( $this , 'settings') );
@@ -129,6 +135,18 @@ class WordCountAndTimePlugin{
            </div>
         <?php
     }
+
+    public function activate(){
+        Activate::activate();
+    }
+
+    public function deactivate(){
+        Deactivate::deactivate();
+    }
 }
 
-$wordCountAndTimePlugin = new WordCountAndTimePlugin;
+if( class_exists( 'WordCountAndTimePlugin' )){
+    $wordCountAndTimePlugin = new WordCountAndTimePlugin;
+    $wordCountAndTimePlugin->register();
+}
+
