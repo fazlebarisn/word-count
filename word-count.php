@@ -70,7 +70,9 @@ class WordCountAndTimePlugin{
     }
 
     function settings(){
-        add_settings_section( 'wcp_first_section' , null , null , 'word-count-settings-page');
+        // add a section on page
+        add_settings_section( 'wcp_first_section' , 'Basic Settings' , null , 'word-count-settings-page');
+        //add_settings_section( 'wcp_advance_section' , 'Advance Settings' , null , 'word-count-settings-page');
 
         // For location
         add_settings_field('wcp_location' , 'Display Location' , array($this , 'locationHTML') , 'word-count-settings-page' , 'wcp_first_section');
@@ -117,6 +119,7 @@ class WordCountAndTimePlugin{
         <?php
     }
 
+    // Add a page to admin panel ( under settings menu )
     function adminPage(){
         add_options_page( 'Word Count Settings' , 'Word Count' , 'manage_options' , 'word-count-settings-page' , array( $this , 'pageHTML') );
     }
